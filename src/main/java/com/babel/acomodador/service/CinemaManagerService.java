@@ -4,6 +4,8 @@ import com.babel.acomodador.model.Cinema;
 import com.babel.acomodador.model.Seat;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CinemaManagerService implements ICinemaManagerService {
 
@@ -20,7 +22,12 @@ public class CinemaManagerService implements ICinemaManagerService {
     }
 
     @Override
-    public void asignarAsiento(int numSeats) {
+    public void assignSeat(int numSeats) {
         usherService.positions(cinema,numSeats);
+    }
+
+    @Override
+    public List<Seat[]> avilieableSeats(int numSeats){
+        return usherService.avilieableSeats(cinema,numSeats);
     }
 }

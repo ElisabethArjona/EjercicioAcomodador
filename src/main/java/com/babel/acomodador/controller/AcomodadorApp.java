@@ -25,9 +25,10 @@ public class AcomodadorApp {
                     userManagerService.asientos();
                 }
                 case 2 -> {
+                    userManagerService.avilieableSeats();
                 }
             }
-        } while (optionUser != 2);
+        } while (optionUser != 3);
     }
 
 }

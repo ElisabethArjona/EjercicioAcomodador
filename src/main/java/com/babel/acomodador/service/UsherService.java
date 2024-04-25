@@ -8,12 +8,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 @Service
 public class UsherService implements IUsherService{
     private final IKeyboardInputService keyboardInputService;
+
 
     public UsherService(IKeyboardInputService keyboardInputService) {
         this.keyboardInputService = keyboardInputService;
@@ -133,4 +135,42 @@ public class UsherService implements IUsherService{
             }
         }
     }
+
+    @Override
+    public List<Seat[]> avilieableSeats(Cinema cinema, int numSeats){
+        List<Seat[]> possibleSeats = new ArrayList<>();
+        Seat[] seatsArray = new Seat[numSeats];
+        Seat[][] seats = cinema.getCinema();
+        setPossibleSeats(numSeats, seats, seatsArray, possibleSeats);
+
+        return possibleSeats;
+    }
+
+    private void setPossibleSeats(int numSeats, Seat[][] seats, Seat[] seatsArray, List<Seat[]> possibleSeats) {
+        int index = -1;
+        int seatNoTaken = 0;
+
+        for (int x = 0; x < seats.length; x++) {
+            seatNoTaken = 0;
+            for (int y = 0; y < seats[x].length; y++) {
+                if (!seats[x][y].isTaken()){
+                    if (seatNoTaken == 0){
+                        index = y;
+                    }
+                    seatNoTaken++;
+                    if (seatNoTaken == numSeats){
+                        for (int k = 0; k < numSeats; k++){
+                            seatsArray[k] = seats[x][index+k];
+                        }
+                        possibleSeats.add(seatsArray.clone());
+                        seatNoTaken = 0;
+                    }
+                } else{
+                    seatNoTaken = 0;
+                    index = -1;
+                }
+            }
+        }
+    }
+
 }

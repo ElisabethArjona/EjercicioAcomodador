@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 @Data
@@ -58,6 +60,7 @@ public class Cinema {
     public String toString() {
         String string = "";
         for (int x=0; x < cinema.length; x++){
+            string += "Columna: " + (x+1) + " ";
             for (int y=0; y < cinema[x].length; y++)
                 string+= "|" + cinema[x][y] + " | ";
             string+= "\n";
